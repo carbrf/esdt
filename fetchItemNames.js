@@ -13,12 +13,13 @@ async function fetchItemNames() {
     const pricesData = JSON.parse(fs.readFileSync(pricesFilePath, 'utf8'));
     console.log("Content of prices.json:", pricesData);
 
-    // Check if pricesData is an array
-    if (!Array.isArray(pricesData)) {
+    // Access the array within prices.json
+    const itemsArray = pricesData.prices;
+    if (!Array.isArray(itemsArray)) {
       throw new Error('prices.json does not contain an array');
     }
 
-    const itemIDs = pricesData.map(item => item.type_id); // Adjust based on the structure of prices.json
+    const itemIDs = itemsArray.map(item => item.type_id); // Adjust based on the structure of prices.json
     const chunkSize = 1000;
     const itemNameFile = path.join(__dirname, 'itemNames.json');
 
