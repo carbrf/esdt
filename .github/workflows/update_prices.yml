@@ -69,7 +69,7 @@ jobs:
         run: node fetchItemNames.js
         if: steps.check_file.outputs.exists == 'false'
 
-      - name: List directory contents
+      - name: List directory contents after fetching item names
         run: ls -al
         if: steps.check_file.outputs.exists == 'false'
 
