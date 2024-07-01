@@ -4,6 +4,7 @@ const path = require('path');
 
 async function fetchItemNames() {
   try {
+    // Replace this array with your actual list of item IDs
     const itemIDs = [/* list of item IDs you need names for */];
     const chunkSize = 1000;
     const itemNameFile = path.join(__dirname, 'itemNames.json');
@@ -22,7 +23,9 @@ async function fetchItemNames() {
 
     const itemNames = {};
     for (const chunk of chunks) {
-      const response = await axios.post('https://esi.evetech.net/latest/universe/names/', chunk);
+      const response = await axios.post('https://esi.evetech.net/latest/universe/names/', chunk, {
+        headers: { 'Content-Type': 'application/json' }
+      });
       response.data.forEach(item => {
         itemNames[item.id] = item.name;
       });
