@@ -4,11 +4,17 @@ const path = require('path');
 
 async function fetchItemNames() {
   try {
-    // Replace this array with your actual list of item IDs
-    const itemIDs = [/* list of item IDs you need names for */];
+    // Read the prices.json file to get the item IDs
+    const pricesFilePath = path.join(__dirname, 'prices.json');
+    if (!fs.existsSync(pricesFilePath)) {
+      throw new Error('prices.json file does not exist');
+    }
+
+    const pricesData = JSON.parse(fs.readFileSync(pricesFilePath, 'utf8'));
+    const itemIDs = pricesData.map(item => item.type_id); // Adjust based on the structure of prices.json
     const chunkSize = 1000;
     const itemNameFile = path.join(__dirname, 'itemNames.json');
-    
+
     // If the file already exists, skip fetching names
     if (fs.existsSync(itemNameFile)) {
       console.log('Item names already fetched and stored.');
