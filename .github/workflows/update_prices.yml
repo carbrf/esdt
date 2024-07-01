@@ -27,7 +27,7 @@ jobs:
       - name: Fetch and update prices
         run: node updatePrices.js
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
 
       - name: Commit and push changes
         run: |
@@ -37,4 +37,4 @@ jobs:
           git commit -m "Update prices"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
