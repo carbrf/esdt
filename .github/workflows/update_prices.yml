@@ -3,7 +3,7 @@ name: Update Prices
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '0 */12 * * *' # This sets the workflow to run every 12 hours
   push:
     branches:
       - main
