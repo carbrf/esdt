@@ -70,7 +70,15 @@ jobs:
         if: steps.check_file.outputs.exists == 'false'
 
       - name: List directory contents after fetching item names
-        run: ls -al
+        run: |
+          echo "Listing directory contents after fetching item names:"
+          ls -al
+        if: steps.check_file.outputs.exists == 'false'
+
+      - name: List directory contents before commit
+        run: |
+          echo "Listing directory contents before commit:"
+          ls -al
         if: steps.check_file.outputs.exists == 'false'
 
       - name: Commit item names
