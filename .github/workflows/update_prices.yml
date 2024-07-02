@@ -1,3 +1,4 @@
+# .github/workflows/update_prices.yml
 name: Update Prices
 
 on:
@@ -37,59 +38,3 @@ jobs:
           git add prices.json
           git commit -m "Update prices"
           git push origin HEAD:main
-
-  fetch-item-names:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check for itemNames.json
-        id: check_file
-        run: |
-          if [ -f itemNames.json ]; then
-            echo "File exists"
-            echo "::set-output name=exists::true"
-          else
-            echo "File does not exist"
-            echo "::set-output name=exists::false"
-          fi
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-        if: steps.check_file.outputs.exists == 'false'
-
-      - name: Install dependencies
-        run: npm install axios js-yaml
-        if: steps.check_file.outputs.exists == 'false'
-
-      - name: Fetch item names
-        run: node fetchItemNames.js
-        if: steps.check_file.outputs.exists == 'false'
-
-      - name: List directory contents after fetching item names
-        run: |
-          echo "Listing directory contents after fetching item names:"
-          ls -al
-        if: steps.check_file.outputs.exists == 'false'
-
-      - name: List directory contents before commit
-        run: |
-          echo "Listing directory contents before commit:"
-          ls -al
-        if: steps.check_file.outputs.exists == 'false'
-
-      - name: Commit item names
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
-          git pull origin main
-          git add itemNames.json
-          git commit -m "Fetch and store item names"
-          git push origin HEAD:main
-        if: steps.check_file.outputs.exists == 'false'
