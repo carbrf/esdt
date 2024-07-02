@@ -16,8 +16,8 @@ async function fetchPrices() {
 
     // Fetch prices for the extracted type IDs
     const prices = [];
+    const response = await axios.get('https://esi.evetech.net/latest/markets/prices/');
     for (const typeID of typeIDs) {
-      const response = await axios.get(`https://esi.evetech.net/latest/markets/prices/`);
       const priceData = response.data.find(item => item.type_id === typeID);
       if (priceData) {
         prices.push(priceData);
