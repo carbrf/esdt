@@ -22,10 +22,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install axios
+        run: npm install axios js-yaml
 
       - name: Fetch and update prices
-        run: node updatePrices.js
+        run: node fetchPrices.js
 
       - name: Commit and push changes
         env:
@@ -63,7 +63,7 @@ jobs:
         if: steps.check_file.outputs.exists == 'false'
 
       - name: Install dependencies
-        run: npm install axios
+        run: npm install axios js-yaml
         if: steps.check_file.outputs.exists == 'false'
 
       - name: Fetch item names
